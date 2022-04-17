@@ -11,12 +11,22 @@ typedef struct struct_message {
 // Create a struct_message called myData
 struct_message myData;
 
+int numMessages = 0;
+
+const int ledPin = 5;
+
 // callback function that will be executed when data is received
 void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
-  digitalWrite (ledPin, HIGH);  // turn on the LED
-  delay(500); // wait for half a second or 500 milliseconds
-  digitalWrite (ledPin, LOW); // turn off the LED
-  delay(500); // wait for half a second or 500 milliseconds
+  memcpy(&myData, incomingData, sizeof(myData));
+  Serial.print("Bytes received: ");
+  Serial.println(len);
+  Serial.print("Char: ");
+  Serial.println(myData.message);
+  Serial.print("Count: ");
+  Serial.println(myData.counter);
+  numMessages = numMessages + 1;
+  Serial.println(numMessages);
+  Serial.println();
 }
  
 void setup() {
